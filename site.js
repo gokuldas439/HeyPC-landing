@@ -1,8 +1,8 @@
 // Add your profile links here. A link left empty simply doesn't appear on the site.
 const SOCIAL = {
   github: "https://github.com/gokuldas439",
-  linkedin: "",
-  instagram: "",
+  linkedin: "https://www.linkedin.com/in/gokuldas439/",
+  instagram: "https://www.instagram.com/_gokul._.das_/",
 };
 
 const ICONS = {
