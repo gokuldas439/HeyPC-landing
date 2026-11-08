@@ -84,6 +84,7 @@ footer { display: flex; justify-content: space-between; align-items: center; gap
 .steps strong { display: block; color: var(--text); margin-bottom: 3px; font-size: 16px; }
 .note { color: var(--muted); font-size: 15px; margin-top: 22px; }
 .note a { color: var(--text); text-decoration: underline; }
+.hash code { color: var(--text); font-size: 13px; overflow-wrap: anywhere; }
 
 @media (max-width: 860px) {
   .menu a.opt { display: none; }
