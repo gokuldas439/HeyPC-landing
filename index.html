@@ -127,20 +127,17 @@ header.top p{color:var(--muted);font-size:clamp(16px,2vw,20px);margin:14px auto 
 .clock{position:absolute;top:150px;left:50%;transform:translateX(-50%);font:300 66px Sora,sans-serif;opacity:0;transition:opacity .3s;z-index:30;text-shadow:0 0 34px rgba(79,209,255,.5)}
 .clock.on{opacity:1}
 
-.legend{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:26px 0}
-.legend div.c{padding:20px;border-radius:18px}
-.legend h3{font:600 18px Sora,sans-serif;margin:12px 0 4px}.legend p{margin:0;color:var(--muted);font-size:15px}
-.mini{display:flex;gap:5px;height:34px;align-items:center}
-.mini.l i{width:6px;border-radius:6px;background:var(--cyan);animation:talk .42s ease-in-out infinite alternate;height:10px}
-.mini.l i:nth-child(2){animation-delay:.1s}.mini.l i:nth-child(3){animation-delay:.22s}.mini.l i:nth-child(4){animation-delay:.05s}.mini.l i:nth-child(5){animation-delay:.16s}
-.mini.w2 i{width:4.5px;border-radius:5px;background:var(--mint);height:8px;animation:flow .7s ease-in-out infinite alternate}
-.mini.w2 i:nth-child(1),.mini.w2 i:nth-child(5){--h:12px;animation-delay:.3s}.mini.w2 i:nth-child(2),.mini.w2 i:nth-child(4){--h:22px;animation-delay:.15s}.mini.w2 i:nth-child(3){--h:32px}
 .cta{text-align:center;padding:40px 22px;border-radius:24px;margin-bottom:26px}
 .cta h2{font:700 clamp(26px,4vw,42px)/1.1 Sora,sans-serif;margin:0 0 18px;letter-spacing:-.02em}
 .cta div{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 footer{color:var(--muted);font-size:13px;text-align:center;padding:0 0 30px}
-@media(max-width:760px){.caps{display:block}#you,#reply{display:none}.legend{grid-template-columns:1fr}header.top{padding:34px 0 18px}nav .hide{display:none}}
-@media(prefers-reduced-motion:reduce){.orb,.bars i,.wave i,.arc i,.mini i{animation:none!important}.win,.say,#pill,.toast{transition:none}}
+@media(max-width:760px){.caps{display:block}#you,#reply{display:none}header.top{padding:34px 0 18px}nav .hide{display:none}}
+@media(prefers-reduced-motion:reduce){.orb,.bars i,.wave i,.arc i{animation:none!important}.win,.say,#pill,.toast{transition:none}}
+body.embed .orb,body.embed nav,body.embed header.top,body.embed .cta,body.embed footer{display:none}
+body.embed .page{width:100%}
+body.embed .frame{background:none;border:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;padding:0}
+body.embed .rail{margin-top:0}
+body.embed,html:has(body.embed){background:transparent}
 </style>
 </head>
 <body>
@@ -176,12 +173,6 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:0 0 30px}
     <div class="progress"><i id="prog"></i></div>
   </div>
 
-  <section class="legend">
-    <div class="c glass"><div class="mini l"><i></i><i></i><i></i><i></i><i></i></div><h3>Blue bars: listening</h3><p>They move with your voice. Dots mean it's waiting for you.</p></div>
-    <div class="c glass"><div class="mini"><div class="arc"><i></i></div></div><h3>Amber spinner: working</h3><p>Jarvis understood you and is doing it.</p></div>
-    <div class="c glass"><div class="mini w2"><i></i><i></i><i></i><i></i><i></i></div><h3>Green wave: speaking</h3><p>Talk over it any time, or say "Jarvis stop".</p></div>
-  </section>
-
   <section class="cta glass">
     <h2>Free. Open source. No API keys.</h2>
     <div>
@@ -194,6 +185,11 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:0 0 30px}
 </div>
 
 <script>
+if (location.search.includes('embed')) {
+  document.body.classList.add('embed');
+  const tell = () => parent.postMessage({ demoHeight: document.documentElement.scrollHeight }, '*');
+  new ResizeObserver(tell).observe(document.body); addEventListener('load', tell);
+}
 const $ = s => document.querySelector(s);
 const STOP = Symbol('stop');
 let token = 0;
